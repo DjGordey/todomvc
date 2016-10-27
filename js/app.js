@@ -1,6 +1,7 @@
-(function (window) {
-	'use strict';
+$( document ).ready(function() {
+    console.log( "ready!" );
 
-	// Your starting point. Enjoy the ride!
-
-})(window);
+    $("#a").click(function(){
+        alert("a");
+    });
+});
