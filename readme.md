@@ -13,6 +13,6 @@
 1) install the dependencies with npm by running: `npm install`
 
 2) Copy database config file
-/config/database.def.php
+`/config/database.def.php`
 To
-/config/database.live.php
+`/config/database.live.php`
