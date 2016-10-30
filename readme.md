@@ -6,3 +6,14 @@
 
 - [jQuery](https://jquery.com/)
 - [MeekroDB](http://meekro.com/)
+
+
+## Install
+
+Copy
+
+/config/database.def.php
+
+To
+
+/config/database.live.php
