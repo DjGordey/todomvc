@@ -1,6 +1,6 @@
 # Custom test for Drom.ru • [TodoMVC](http://todomvc.com)
 
-> Frontend: jQuery. Backend: PHP using MeekroDB libraly
+> Frontend: jQuery. Backend: PHP using MeekroDB libraly for MySQL
 
 ## Resources
 
