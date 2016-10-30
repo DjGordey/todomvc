@@ -3,16 +3,38 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Template • TodoMVC</title>
+		<title>TodoMVC</title>
 		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
 		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
 		<!-- CSS overrides - remove if you don't need it -->
 		<link rel="stylesheet" href="css/app.css">
 	</head>
 	<body>
-		<section class="todoapp">
+        <section class="menu">
+            <a href="#/signup"  class="guest">Sign up</a>
+            <a href="#/signin"  class="guest">Sign in</a>
+            <span class="user" id="hello_user"></span>
+            <a href="#/signout" class="user">Sign out</a>
+        </section>
+
+        <section class="form signup">
+            <h2>Sign up</h2>
+            <input class="" type="text" name="email" placeholder="Email">
+            <input class="" type="password" name="pass" placeholder="Password">
+            <input class="" type="password" name="pass2" placeholder="Confirm Password">
+            <button id="dosignup">Sign up</button>
+        </section>
+
+        <section class="form signin">
+            <h2>Sign in</h2>
+            <input class="" type="text" name="email" placeholder="Email">
+            <input class="" type="password" name="pass" placeholder="Password">
+            <button id="dosignin">Sign in</button>
+        </section>
+
+        <section class="todoapp">
 			<header class="header">
-				<h1>todos</h1>
+				<h1><a href="#/">todos</a></h1>
 				<input class="new-todo" placeholder="What needs to be done?" autofocus>
 			</header>
 			<section class="main">

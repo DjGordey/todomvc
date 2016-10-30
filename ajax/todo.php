@@ -1,16 +1,9 @@
 <?
 include_once("../inc/setup.inc.php");
 
-$todomvc_hash = null;
-if (isset($_COOKIE['todomvc'])) $todomvc_hash = $_COOKIE['todomvc'];
-else {
-    $todomvc_hash = User::makeHash();
-    setcookie("todomvc", $todomvc_hash, strtotime("+1 year"), "/", ".".$_SERVER['HTTP_HOST']);
-}
-
-$user = new user($todomvc_hash);
+$user = new user();
+$user->loadbyHash($_SESSION['user']);
 $todo = new todo();
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //delete item
@@ -72,4 +65,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 //load list of items
 $todos = $todo->getList($user->id);
-print json_encode($todos);
+print json_encode(array("list" => $todos, "user" => array("id" => $user->id, "email" => $user->email)));

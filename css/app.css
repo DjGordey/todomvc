@@ -1,8 +1,74 @@
-/*
 
-app-template.css overrides
+.todoapp h1 a {
+    color: rgba(175, 47, 47, 0.15);
+    text-decoration: none;
+}
+.menu {
+    margin: 10px 0;
+}
+.menu span {
+    font-size: 20px;
+}
+.menu a {
+    font-size: 20px;
+    color: rgba(175, 47, 47, 0.5);
+    text-decoration: none;
+    margin-right: 20px;
+}
+.form {
+    text-align: center;
+}
+.form h2 {
+    text-align: center;
+    font-size: 30px;
+    color: rgba(175, 47, 47, 0.15);
+}
+.form input {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    font-size: 24px;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: 1.4em;
+    color: inherit;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 16px 16px 16px 60px;
+    border: none;
+    background: rgba(0, 0, 0, 0.003);
+    box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
+    background: #ffffff;
+}
 
-remove this comment if used
-remove this file if not
+.form input::-webkit-input-placeholder {
+    font-style: italic;
+    font-weight: 300;
+    color: #e6e6e6;
+}
 
-*/
+.form input::-moz-placeholder {
+    font-style: italic;
+    font-weight: 300;
+    color: #e6e6e6;
+}
+
+.form input::input-placeholder {
+    font-style: italic;
+    font-weight: 300;
+    color: #e6e6e6;
+}
+
+.form button {
+    border: 1px solid rgba(175, 47, 47, 0.2);
+    background: #ffffff;
+    border-radius: 3px;
+    padding: 16px;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.signup, .signin, .user {
+    display: none;
+}

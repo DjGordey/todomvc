@@ -28,10 +28,18 @@ function appendTodo(id, txt, completed) {
 
 //first init
 function initTodo() {
+    $(".todo-list").html("");
     $.getJSON("ajax/todo.php", function( data ) {
-        $.each( data, function( key, val ) {
+        $.each( data.list, function( key, val ) {
             appendTodo(val.id, val.title, val.completed);
         });
+        if (data.user.email) {
+            $(".guest").hide();
+            $(".user").show();
+            $("#hello_user").text("Hello, "+data.user.email);
+            $(".signup").hide();
+            $(".signin").hide();
+        }
         countTodo();
     });
 }
@@ -59,19 +67,46 @@ function countTodo() {
 function checkFilter() {
     var h=location.hash;
     if (h=="") return;
+    var f=0;
     if (h=="#/active") {
         $(".todo-list li").hide();
         $(".todo-list li").not(".completed").show();
+        f=1;
     }
     if (h=="#/completed") {
         $(".todo-list li").hide();
         $(".todo-list li.completed").show();
+        f=1;
     }
     if (h=="#/") {
         $(".todo-list li").show();
+        f=1;
     }
-    $('.filters a.selected').removeClass("selected");
-    $('.filters a[href="'+h+'"]').addClass("selected");
+    if (f) {
+        $('.filters a.selected').removeClass("selected");
+        $('.filters a[href="' + h + '"]').addClass("selected");
+        $(".signin").hide();
+        $(".signup").hide();
+        return false;
+    }
+
+    if (h=="#/signup") {
+        $(".signin").hide();
+        $(".signup").show();
+    }
+    if (h=="#/signin") {
+        $(".signup").hide();
+        $(".signin").show();
+    }
+    if (h=="#/signout") {
+        $.post("/ajax/user.php", {action: "signout"}, function(data) {
+            $(".guest").show();
+            $(".user").hide();
+            $("#hello_user").text();
+            location.hash="";
+            initTodo();
+        });
+    }
 }
 
 //update item
@@ -85,8 +120,77 @@ function updateTodo(text) {
     }
 }
 
+function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
+
 $(document).ready(function() {
     initTodo();
+
+    $("#dosignup").click(function() {
+        var e=$.trim($(".signup input[name='email']").val());
+        var p1=$.trim($(".signup input[name='pass']").val());
+        var p2=$.trim($(".signup input[name='pass2']").val());
+        if (e=="" || p1=="" || p2=="") {
+            alert("All fields are required");
+            return false;
+        }
+        if (!isEmail(e)) {
+            alert("Incorrect email");
+            return false;
+        }
+        if (p1!=p2) {
+            alert("Confirm password correctly");
+            return false;
+        }
+        $.post("/ajax/user.php", {action: "signup", email: e, pass: p1}, function(data) {
+            if (data.id>0) {
+                $(".guest").hide();
+                $(".user").show();
+                $("#hello_user").text("Hello, "+data.email);
+                $(".signup").hide();
+                $(".signin").hide();
+                location.hash="";
+                $(".signup input[name='email']").val("");
+                $(".signup input[name='pass']").val("");
+                $(".signup input[name='pass2']").val("");
+                initTodo();
+            }
+            else {
+                alert("Sign up error");
+            }
+        }, "json");
+    });
+
+    $("#dosignin").click(function() {
+        var e=$.trim($(".signin input[name='email']").val());
+        var p=$.trim($(".signin input[name='pass']").val());
+        if (e=="" || p=="") {
+            alert("All fields are required");
+            return false;
+        }
+        if (!isEmail(e)) {
+            alert("Incorrect email");
+            return false;
+        }
+        $.post("/ajax/user.php", {action: "signin", email: e, pass: p}, function(data) {
+            if (data.id>0) {
+                $(".guest").hide();
+                $(".user").show();
+                $("#hello_user").text("Hello, "+data.email);
+                $(".signup").hide();
+                $(".signin").hide();
+                location.hash="";
+                $(".signin input[name='email']").val("");
+                $(".signin input[name='pass']").val("");
+                initTodo();
+            }
+            else {
+                alert("Your email/password was incorrect");
+            }
+        }, "json");
+    });
 
     //add new item
     $('.new-todo').keypress(function(e) {

@@ -12,3 +12,5 @@ DB::$user = DATABASE_USER;
 DB::$password = DATABASE_PASSWORD;
 DB::$dbName = DATABASE_NAME;
 DB::$encoding = 'utf8';
+
+if (!isset($_SESSION['user'])) $_SESSION['user'] = user::makeHash();
